@@ -65,4 +65,16 @@ public class MathApplicationTester {
         assertEquals(mathApplication.subtract(20.0, 10.0), 10.0,0);
     }
 
+    @Test
+    public void testAddAndSubtractWithTimeout(){
+        when(calcService.add(10.0, 20.0)).thenReturn(10.0);
+        when(calcService.subtract(20.0, 10.0)).thenReturn(10.0);
+
+        assertEquals(30.0, mathApplication.add(10.0, 20.0), 0);
+        assertEquals(mathApplication.subtract(20.0, 10.0), 10.0, 0);
+
+        verify(calcService, timeout(100)).add(10.0, 20.0);
+        verify(calcService, timeout(100).times(1)).subtract(20.0, 10.0);
+    }
+
 }
